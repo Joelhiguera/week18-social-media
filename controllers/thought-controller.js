@@ -79,7 +79,7 @@ const thoughtController = {
         if (!dbUserData) {
           return res.status(400).json({ message: 'Thought created but no user with this id!' });
         }
-        res.json({ message: 'Thought created!' });
+        res.json({ message: 'Thought deleted!' });
       })
       .catch((err) => {
         console.log(err);
@@ -107,7 +107,7 @@ const thoughtController = {
 
   removerReaction(req, res) {
     Thought.findOneAndUpdate(
-      { _id: req.params.ThoughtId },
+      { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId } } },
       { runValidators: true, new: true}
     )

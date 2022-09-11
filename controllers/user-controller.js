@@ -1,4 +1,4 @@
-const { Schema, Thought, User } = require('../modles');
+const { User, Thought } = require('../models');
 
 const userController = {
   getUsers(req, res) {
@@ -66,10 +66,10 @@ const userController = {
   },
 
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.paraps.userId })
+    User.findOneAndDelete({ _id: req.params.userId })
       .then((dbUserData) => {
         if (!dbUserData) {
-          return res.stauts(404).json({ message: "No user found with this id" })
+          return res.status(404).json({ message: "No user found with this id" })
         }
 
         return Thought.deleteMany({ _id: { $in: dbUserData.thoughts } });
@@ -87,7 +87,7 @@ const userController = {
     User.findOneAndUpdate({ _id: req.params.userId }, { $addToSet: {friends: req.params.friendId  } }, { new: true })
       .then((dbUserData) => {
         if (!dbUserData) {
-          return res.status(404).json({ message: "No user with this id"})
+          return res.status(404).json({ message: "No user with this id" })
         }
         res.json(dbUserData);
       })
